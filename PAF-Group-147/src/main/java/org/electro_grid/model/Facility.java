@@ -91,6 +91,50 @@ public class Facility
 		
 	}
 	
+	public String insertFacility(String serviceName, String serviceType, String unitCost, String maxUnit, String addCost)
+	{
+		String output = "";
+	
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{
+				return "Error while connecting to the database for inserting."; 
+			}
+		
+			
+			// create a prepared statement
+			String query = " insert into service "
+						+ "(`serviceID`,`serviceName`,`serviceType`,`unitCost`,`maxUnit` ,`addCost`)"
+						+ " values (?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setString(2, serviceName);
+			preparedStmt.setString(3, serviceType);
+			preparedStmt.setDouble(4, Double.parseDouble(unitCost));
+			preparedStmt.setInt(5, Integer.parseInt(maxUnit));
+			preparedStmt.setDouble(6, Double.parseDouble(addCost));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Inserted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while inserting the item.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
 	
 }
 		
