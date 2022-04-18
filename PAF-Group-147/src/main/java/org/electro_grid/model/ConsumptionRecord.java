@@ -86,4 +86,47 @@ public class ConsumptionRecord {
 	
 	}
 	
+	public String insertConsumptionRecord(String recordDate, String meterNo, int consumedUnits, boolean payStatus)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{
+				return "Error while connecting to the database for inserting.";
+			}
+			
+			
+			// create a prepared statement
+			String query = " insert into consumptionrecord "
+			+ "(`consumptionID`,`recordDate`,`meterNo`,`consumedUnits`,`payStatus`)"
+			+ " values (?, ?, ?, ?, ?)";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setString(2, recordDate);
+			preparedStmt.setString(3, meterNo);
+			preparedStmt.setInt(4, consumedUnits);
+			preparedStmt.setBoolean(5, payStatus);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Inserted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while inserting the item.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
 }

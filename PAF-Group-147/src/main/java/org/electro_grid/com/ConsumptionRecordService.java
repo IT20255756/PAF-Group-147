@@ -28,4 +28,18 @@ ConsumptionRecord itemObj = new ConsumptionRecord();
 		return itemObj.readConsumptionRecord();
 	}
 	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String insertConsumptionRecord(@FormParam("recordDate") String recordDate,
+	@FormParam("meterNo") String meterNo,
+	@FormParam("consumedUnits") int consumedUnits,
+	@FormParam("payStatus") boolean payStatus)
+	{
+		String output = itemObj.insertConsumptionRecord(recordDate, meterNo, consumedUnits, payStatus);
+		return output;
+	}
+	
 }
