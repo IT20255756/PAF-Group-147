@@ -27,5 +27,9 @@
 		 <servlet-name>Jersey Web Application</servlet-name>
 		 <url-pattern>/ConnectionService/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		 <servlet-name>Jersey Web Application</servlet-name>
+		 <url-pattern>/FeedbackService/*</url-pattern>
+	</servlet-mapping>
   
 </web-app>
