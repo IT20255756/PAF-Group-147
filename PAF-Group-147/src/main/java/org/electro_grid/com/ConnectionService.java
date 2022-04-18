@@ -29,6 +29,17 @@ public class ConnectionService {
 		return ConneObj.readConnection();
 	}
 	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String insertConnection(@FormParam("accountNo") String accountNo,
+					@FormParam("connectionName") String connectionName)
+	{
+		String output = ConneObj.insertConnection(accountNo, connectionName);
+		return output;
+	}
 	
 
 }
