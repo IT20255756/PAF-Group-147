@@ -128,7 +128,73 @@ public class Connections {
 			
 			return output;
 			
-		}		
+		}
+		
+
+		//update connections
+				public String updateConnection(String connectionID, String accountNo, String connectionName)
+				{
+					String output = "";
+					
+					try
+					{
+						Connection con = connect();
+						
+						if (con == null)
+						{
+							return "Error while connecting to the database for updating."; 
+						}
+						
+						// create a prepared statement
+						String query = "UPDATE connection SET accountNo=?,connectionName=? WHERE connectionID=?";
+						
+						PreparedStatement preparedStmt = con.prepareStatement(query);
+						
+						// binding values
+						preparedStmt.setString(1, accountNo);
+						preparedStmt.setString(2, connectionName);
+						preparedStmt.setString(3, connectionID);
+						
+						// execute the statement
+						preparedStmt.execute();
+						con.close();
+						
+						output = "Updated successfully";
+					}
+					catch (Exception e)
+					{
+						output = "Error while updating the connection.";
+						System.err.println(e.getMessage());
+						
+					}
+					
+					return output;	
+				}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 			
 
 }
