@@ -135,6 +135,48 @@ public class Facility
 		return output;
 	}
 	
+	public String updateFacility(String serviceID, String serviceName, String serviceType, String unitCost, String maxUnit, String addCost)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{
+				return "Error while connecting to the database for updating."; 
+			}
+			
+			// create a prepared statement
+			String query = "UPDATE service SET serviceName=?,serviceType=?,unitCost=?,maxUnit=?, addCost=?"
+			+ "WHERE serviceID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setString(1, serviceName);
+			preparedStmt.setString(2, serviceType);
+			preparedStmt.setDouble(3, Double.parseDouble(unitCost));
+			preparedStmt.setInt(4, Integer.parseInt(maxUnit));
+			preparedStmt.setDouble(5, Double.parseDouble(addCost));
+			preparedStmt.setInt(6, Integer.parseInt(serviceID));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the item.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;	
+	}
+	
 	
 }
 		
