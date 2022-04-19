@@ -63,4 +63,44 @@ public class Feedback {
 		return output;
 	}
 	
+	public String updateFeedback(String feedbackID, String feedbackType, String feedbackDate, String feedbackDesc)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{
+				return "Error while connecting to the database for updating."; 
+			}
+			
+			// create a prepared statement
+			String query = "UPDATE feedback SET feedbackType=?,feedbackDate=?,feedbackDesc=?"
+			+ "WHERE feedbackID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setString(1, feedbackType);
+			preparedStmt.setString(2, feedbackDate);
+			preparedStmt.setString(2, feedbackDesc);
+			preparedStmt.setInt(6, Integer.parseInt(feedbackID));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the item.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;	
+	}
+	
 }

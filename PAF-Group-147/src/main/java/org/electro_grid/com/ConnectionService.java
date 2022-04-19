@@ -41,5 +41,24 @@ public class ConnectionService {
 		return output;
 	}
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String updateConnection(String connectionData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject ConneObject = new JsonParser().parse(connectionData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String connectionID = ConneObject.get("connectionID").getAsString();
+		String accountNo = ConneObject.get("accountNo").getAsString();
+		String connectionName = ConneObject.get("connectionName").getAsString();
+		
+		String output = ConneObj.updateConnection(connectionID, accountNo,connectionName);
+		
+		return output;
+	}
 
 }
