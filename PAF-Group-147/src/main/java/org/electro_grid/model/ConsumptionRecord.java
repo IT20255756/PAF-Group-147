@@ -129,4 +129,44 @@ public class ConsumptionRecord {
 		return output;
 	}
 	
+	public String updateConsumptionRecord(String consumptionID, String recordDate, String meterNo, String consumedUnits, String payStatus)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{
+				return "Error while connecting to the database for updating.";
+			}
+			
+			// create a prepared statement
+			String query = "UPDATE consumptionrecord SET recordDate=?,meterNo=?,consumedUnits=?,payStatus=? WHERE consumptionID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setString(1, recordDate);
+			preparedStmt.setString(2, meterNo);
+			preparedStmt.setInt(3, Integer.parseInt(consumedUnits));
+			preparedStmt.setBoolean(4, Boolean.parseBoolean(payStatus));
+			preparedStmt.setInt(5, Integer.parseInt(consumptionID));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the consumption record.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
 }

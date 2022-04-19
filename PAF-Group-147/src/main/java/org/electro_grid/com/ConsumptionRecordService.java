@@ -42,4 +42,25 @@ ConsumptionRecord itemObj = new ConsumptionRecord();
 		return output;
 	}
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String updateConsumptionRecord(String consumptionData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject itemObject = new JsonParser().parse(consumptionData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String consumptionID = itemObject.get("consumptionID").getAsString();
+		String recordDate = itemObject.get("recordDate").getAsString();
+		String meterNo = itemObject.get("meterNo").getAsString();
+		String consumedUnits = itemObject.get("consumedUnits").getAsString();
+		String payStatus = itemObject.get("payStatus").getAsString();
+		
+		String output = itemObj.updateConsumptionRecord(consumptionID, recordDate, meterNo, consumedUnits, payStatus);
+		return output;
+	}
+	
 }
