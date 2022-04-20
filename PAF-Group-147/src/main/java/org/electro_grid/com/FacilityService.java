@@ -65,5 +65,22 @@ public class FacilityService
 		return output;
 	}
 	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String deleteFacility(String itemData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+		
+		//Read the value from the element <serviceID>
+		String serviceID = doc.select("serviceID").text();
+		String output = itemObj.deleteFacility(serviceID);
+		
+		return output;
+	}
+	
 
 }
