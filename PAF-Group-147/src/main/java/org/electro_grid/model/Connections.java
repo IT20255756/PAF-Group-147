@@ -3,25 +3,25 @@ import java.sql.*;
 
 public class Connections {
 	
-	//A common method to connect to the DB
-			private Connection connect()
+	    //A common method to connect to the DB
+		private Connection connect()
+		{
+			Connection con = null;
+		
+			try
 			{
-				Connection con = null;
-			
-				try
-				{
-					Class.forName("com.mysql.jdbc.Driver");
-					
-					//Provide the correct details: DBServer/DBName, username, password
-					con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electro_grid", "root", "");
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
+				Class.forName("com.mysql.jdbc.Driver");
 				
-				return con;
+				//Provide the correct details: DBServer/DBName, username, password
+				con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electro_grid", "root", "");
 			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			return con;
+		}
 			
 		//insert new connections
 		public String insertConnection(String accountNo, String connectionName)
@@ -66,8 +66,7 @@ public class Connections {
 			return output;
 		}
 			
-			
-			
+					
 			
 		//retrieve connections
 		public String readConnection()
@@ -132,68 +131,83 @@ public class Connections {
 		
 
 		//update connections
-				public String updateConnection(String connectionID, String accountNo, String connectionName)
+		public String updateConnection(String connectionID, String accountNo, String connectionName)
+		{
+			String output = "";
+			
+			try
+			{
+				Connection con = connect();
+				
+				if (con == null)
 				{
-					String output = "";
-					
-					try
-					{
-						Connection con = connect();
-						
-						if (con == null)
-						{
-							return "Error while connecting to the database for updating."; 
-						}
-						
-						// create a prepared statement
-						String query = "UPDATE connection SET accountNo=?,connectionName=? WHERE connectionID=?";
-						
-						PreparedStatement preparedStmt = con.prepareStatement(query);
-						
-						// binding values
-						preparedStmt.setString(1, accountNo);
-						preparedStmt.setString(2, connectionName);
-						preparedStmt.setString(3, connectionID);
-						
-						// execute the statement
-						preparedStmt.execute();
-						con.close();
-						
-						output = "Updated successfully";
-					}
-					catch (Exception e)
-					{
-						output = "Error while updating the connection.";
-						System.err.println(e.getMessage());
-						
-					}
-					
-					return output;	
+					return "Error while connecting to the database for updating."; 
 				}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
+				// create a prepared statement
+				String query = "UPDATE connection SET accountNo=?,connectionName=? WHERE connectionID=?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				// binding values
+				preparedStmt.setString(1, accountNo);
+				preparedStmt.setString(2, connectionName);
+				preparedStmt.setString(3, connectionID);
+				
+				// execute the statement
+				preparedStmt.execute();
+				con.close();
+				
+				output = "Updated successfully";
+			}
+			catch (Exception e)
+			{
+				output = "Error while updating the connection.";
+				System.err.println(e.getMessage());
+				
+			}
+			
+			return output;	
+		}
+				
+				
+		//delete connetions
+		public String deleteConnection(String connectionID)
+		{
+			String output = "";
+			
+			try
+			{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for deleting."; 
+				}
+				
+				// create a prepared statement
+				String query = "delete from connection where connectionID=?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				// binding values
+				preparedStmt.setInt(1, Integer.parseInt(connectionID));
+				
+				// execute the statement
+				preparedStmt.execute();
+				con.close();
+				
+				output = "Deleted successfully";
+			}
+			catch (Exception e)
+			{
+				output = "Error while deleting the connection.";
+				System.err.println(e.getMessage());
+			}
+			
+			return output;
+			
+		}
 		
 			
 

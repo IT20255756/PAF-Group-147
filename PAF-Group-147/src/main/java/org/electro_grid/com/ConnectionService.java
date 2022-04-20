@@ -60,5 +60,22 @@ public class ConnectionService {
 		
 		return output;
 	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String deleteConnection(String connectionData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(connectionData, "", Parser.xmlParser());
+		
+		//Read the value from the element <customerID>
+		String connectionID = doc.select("connectionID").text();
+		String output = ConneObj.deleteConnection(connectionID);
+		
+		return output;
+	}
 
 }
