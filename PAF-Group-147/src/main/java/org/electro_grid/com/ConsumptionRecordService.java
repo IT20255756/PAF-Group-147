@@ -63,4 +63,21 @@ ConsumptionRecord itemObj = new ConsumptionRecord();
 		return output;
 	}
 	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String deleteConsumptionRecord(String consumptionData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(consumptionData, "", Parser.xmlParser());
+		
+		//Read the value from the element <serviceID>
+		String consumptionID = doc.select("consumptionID").text();
+		String output = itemObj.deleteConsumptionRecord(consumptionID);
+		
+		return output;
+	}
+	
 }
