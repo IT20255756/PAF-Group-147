@@ -51,4 +51,21 @@ public class FeedbackService {
 		
 		return output;
 	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	
+	public String deleteFeedback(String itemData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+		
+		//Read the value from the element <feedbackID>
+		String feedbackID = doc.select("feedbackID").text();
+		String output = itemObj.deleteFeedback(feedbackID);
+		
+		return output;
+	}
 }
