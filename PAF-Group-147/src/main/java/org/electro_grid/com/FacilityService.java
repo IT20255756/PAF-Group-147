@@ -43,27 +43,7 @@ public class FacilityService
 		return output;
 	}
 	
-	@PUT
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
 	
-	public String updateFacility(String itemData)
-	{
-		//Convert the input string to a JSON object
-		JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
-		
-		//Read the values from the JSON object
-		String serviceID = itemObject.get("serviceID").getAsString();
-		String serviceName = itemObject.get("serviceName").getAsString();
-		String serviceType = itemObject.get("serviceType").getAsString();
-		String unitCost = itemObject.get("unitCost").getAsString();
-		String maxUnit = itemObject.get("maxUnit").getAsString();
-		String addCost = itemObject.get("addCost").getAsString();
-		String output = itemObj.updateFacility(serviceID, serviceName, serviceType, unitCost, maxUnit, addCost);
-		
-		return output;
-	}
 	
 	@DELETE
 	@Path("/")
