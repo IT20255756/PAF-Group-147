@@ -15,8 +15,9 @@ import org.jsoup.nodes.Document;
 @Path("/Feedback")
 public class FeedbackService {
 	
-	Feedback itemObj = new Feedback();
+	Feedback feedbackObj = new Feedback();
 	
+	//Insert Function 
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -26,12 +27,12 @@ public class FeedbackService {
 					@FormParam("feedbackDate") String feedbackDate,
 					@FormParam("feedbackDesc") String feedbackDesc)
 	{
-		String output = itemObj.insertFeedback(feedbackType, feedbackDate, feedbackDesc);
+		String output = feedbackObj.insertFeedback(feedbackType, feedbackDate, feedbackDesc);
 		return output;
 	}
 
 	
-	
+	//Update Function
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -47,11 +48,12 @@ public class FeedbackService {
 		String feedbackType = itemObject.get("feedbackType").getAsString();
 		String feedbackDate = itemObject.get("feedbackDate").getAsString();
 		String feedbackDesc = itemObject.get("feedbackDesc").getAsString();
-		String output = itemObj.updateFeedback(feedbackID, feedbackType, feedbackDate, feedbackDesc);
+		String output = feedbackObj.updateFeedback(feedbackID, feedbackType, feedbackDate, feedbackDesc);
 		
 		return output;
 	}
 	
+	//Delete Function
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -64,7 +66,7 @@ public class FeedbackService {
 		
 		//Read the value from the element <feedbackID>
 		String feedbackID = doc.select("feedbackID").text();
-		String output = itemObj.deleteFeedback(feedbackID);
+		String output = feedbackObj.deleteFeedback(feedbackID);
 		
 		return output;
 	}

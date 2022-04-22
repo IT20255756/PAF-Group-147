@@ -18,17 +18,19 @@ import org.jsoup.nodes.Document;
 @Path("/Customer")
 public class CustomerService
 {
-	Customer itemObj = new Customer();
+	Customer customerObj = new Customer();
 	
+	//Read Function
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	
 	public String readCustomer()
 	{
-		return itemObj.readCustomer();
+		return customerObj.readCustomer();
 	}
 	
+	//Insert Function
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -40,10 +42,11 @@ public class CustomerService
 					@FormParam("mobileNo") String mobileNo,
 					@FormParam("email") String email)
 	{
-		String output = itemObj.insertCustomer(customerName, nic, address, mobileNo, email);
+		String output = customerObj.insertCustomer(customerName, nic, address, mobileNo, email);
 		return output;
 	}
 	
+	//Update Function
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -61,11 +64,12 @@ public class CustomerService
 		String address = itemObject.get("address").getAsString();
 		String mobileNo = itemObject.get("mobileNo").getAsString();
 		String email = itemObject.get("email").getAsString();
-		String output = itemObj.updateCustomer(customerID, customerName, nic, address, mobileNo, email);
+		String output = customerObj.updateCustomer(customerID, customerName, nic, address, mobileNo, email);
 		
 		return output;
 	}
 	
+	//Delete Function
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -78,7 +82,7 @@ public class CustomerService
 		
 		//Read the value from the element <customerID>
 		String customerID = doc.select("customerID").text();
-		String output = itemObj.deleteCustomer(customerID);
+		String output = customerObj.deleteCustomer(customerID);
 		
 		return output;
 	}
