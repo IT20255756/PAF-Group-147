@@ -2,6 +2,7 @@ package org.electro_grid.com;
 
 import org.electro_grid.model.*;
 
+
 //For REST Service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,6 +24,7 @@ public class FacilityService
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	
+	//read function
 	public String readItems()
 	{
 		return itemObj.readFacility();
@@ -33,6 +35,7 @@ public class FacilityService
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	
+	//insert function
 	public String insertFacility(@FormParam("serviceName") String serviceName,
 					@FormParam("serviceType") String serviceType,
 					@FormParam("unitCost") String unitCost,
@@ -43,6 +46,24 @@ public class FacilityService
 		return output;
 	}
 	
+	//update function
+	public String updateFacility(String itemData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String serviceID = itemObject.get("serviceID").getAsString();
+		String serviceName = itemObject.get("serviceName").getAsString();
+		String serviceType = itemObject.get("serviceType").getAsString();
+		String unitCost = itemObject.get("unitCost").getAsString();
+		String maxUnit = itemObject.get("maxUnit").getAsString();
+		String addCost = itemObject.get("addCost").getAsString();
+		String output = itemObj.updateFacility(serviceID, serviceName, serviceType, unitCost, maxUnit, addCost);
+		
+		return output;
+	}
+	
 	
 	
 	@DELETE
@@ -50,6 +71,7 @@ public class FacilityService
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 	
+	//delete function
 	public String deleteFacility(String itemData)
 	{
 		//Convert the input string to an XML document
