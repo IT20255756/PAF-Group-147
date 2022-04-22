@@ -21,6 +21,7 @@ public class Feedback {
 		return con;
 	}
 
+	//Insert Function
 	public String insertFeedback(String feedbackType, String feedbackDate, String feedbackDesc)
 	{
 		String output = "";
@@ -29,26 +30,27 @@ public class Feedback {
 		{
 			Connection con = connect();
 		
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for inserting.";
 			}
 		
 		
-			// create a prepared statement
+			//Create a Prepared Statement
 			String query = " insert into feedback "
 			+ "(`feedbackID`,`feedbackType`,`feedbackDate`,`feedbackDesc`)"
 			+ " values (?, ?, ?, ?, ?, ?)";
 		
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 		
-			// binding values
+			//Binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, feedbackType);
 			preparedStmt.setString(3, feedbackDate);
 			preparedStmt.setString(3, feedbackDesc);
 		
-			// execute the statement
+			//Execute the statement
 			preparedStmt.execute();
 			con.close();
 		
@@ -63,6 +65,7 @@ public class Feedback {
 		return output;
 	}
 	
+	//Update Function
 	public String updateFeedback(String feedbackID, String feedbackType, String feedbackDate, String feedbackDesc)
 	{
 		String output = "";
@@ -71,24 +74,25 @@ public class Feedback {
 		{
 			Connection con = connect();
 			
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for updating."; 
 			}
 			
-			// create a prepared statement
+			//Create a Prepared Statement
 			String query = "UPDATE feedback SET feedbackType=?,feedbackDate=?,feedbackDesc=?"
 			+ "WHERE feedbackID=?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
-			// binding values
+			//Binding values
 			preparedStmt.setString(1, feedbackType);
 			preparedStmt.setString(2, feedbackDate);
 			preparedStmt.setString(2, feedbackDesc);
 			preparedStmt.setInt(6, Integer.parseInt(feedbackID));
 			
-			// execute the statement
+			//Execute the statement
 			preparedStmt.execute();
 			con.close();
 			
@@ -96,13 +100,14 @@ public class Feedback {
 		}
 		catch (Exception e)
 		{
-			output = "Error while updating the item.";
+			output = "Error while updating the feedback.";
 			System.err.println(e.getMessage());
 		}
 		
 		return output;	
 	}
 	
+	//Delete Function
 	public String deleteFeedback(String feedbackID)
 	{
 		String output = "";
@@ -111,20 +116,21 @@ public class Feedback {
 		{
 			Connection con = connect();
 			
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for deleting."; 
 			}
 			
-			// create a prepared statement
+			//Create a Prepared Statement
 			String query = "delete from feedback where feedbackID=?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
-			// binding values
+			//Binding values
 			preparedStmt.setInt(1, Integer.parseInt(feedbackID));
 			
-			// execute the statement
+			//Execute the statement
 			preparedStmt.execute();
 			con.close();
 			
@@ -132,7 +138,7 @@ public class Feedback {
 		}
 		catch (Exception e)
 		{
-			output = "Error while deleting the item.";
+			output = "Error while deleting the feedback.";
 			System.err.println(e.getMessage());
 		}
 		

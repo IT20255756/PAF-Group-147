@@ -24,6 +24,7 @@ public class Customer
 		return con;
 	}
 	
+	//Insert Function
 	public String insertCustomer(String customerName, String nic, String address, String mobileNo, String email)
 	{
 		String output = "";
@@ -32,20 +33,21 @@ public class Customer
 		{
 			Connection con = connect();
 			
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for inserting."; 
 			}
 		
 			
-			// create a prepared statement
+			//Create a Prepared Statement
 			String query = " insert into customer "
 						+ "(`customerID`,`customerName`,`nic`,`address`,`mobileNo` ,`email`)"
 						+ " values (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
-			// binding values
+			//Binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, customerName);
 			preparedStmt.setString(3, nic);
@@ -53,7 +55,7 @@ public class Customer
 			preparedStmt.setString(5, mobileNo);
 			preparedStmt.setString(6, email);
 			
-			// execute the statement
+			//Execute the statement
 			preparedStmt.execute();
 			con.close();
 			
@@ -61,13 +63,14 @@ public class Customer
 		}
 		catch (Exception e)
 		{
-			output = "Error while inserting the item.";
+			output = "Error while inserting Customer Record.";
 			System.err.println(e.getMessage());
 		}
 		
 		return output;
 	}
 	
+	//Read Function
 	public String readCustomer()
 	{
 		String output = "";
@@ -76,12 +79,13 @@ public class Customer
 		{
 			Connection con = connect();
 			
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for reading."; 
 			}
 			
-			// Prepare the html table to be displayed
+			//Prepare the html table to be displayed
 			output = "<table border='1'><tr><th>Customer Name</th><th>NIC</th>" +
 			"<th>Address</th>" +
 			"<th>Mobile Number</th>" +
@@ -92,7 +96,7 @@ public class Customer
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			
-			// iterate through the rows in the result set
+			//Iterate through the rows in the result set
 			while (rs.next())
 			{
 				String customerID = Integer.toString(rs.getInt("customerID"));
@@ -102,14 +106,14 @@ public class Customer
 				String mobileNo = rs.getString("mobileNo");
 				String email = rs.getString("email");
 				
-				// Add into the html table
+				//Add into the html table
 				output += "<tr><td>" + customerName + "</td>";
 				output += "<td>" + nic + "</td>";
 				output += "<td>" + address + "</td>";
 				output += "<td>" + mobileNo + "</td>";
 				output += "<td>" + email + "</td>";
 				
-				// buttons
+				//Buttons
 				output += "<td><input name='btnUpdate' type='button' value='Update'"
 				+ "class='btn btn-secondary'></td>"
 				+ "<td><form method='post' action='service.jsp'>"
@@ -121,12 +125,12 @@ public class Customer
 			
 			con.close();
 			
-			// Complete the html table
+			//Complete the html table
 			output += "</table>";
 		}
 		catch (Exception e)
 		{
-			output = "Error while reading the items.";
+			output = "Error while reading the customer details.";
 			System.err.println(e.getMessage());
 		}
 		
@@ -134,6 +138,7 @@ public class Customer
 		
 	}
 	
+	//Update Function
 	public String updateCustomer(String customerID, String customerName, String nic, String address, String mobileNo, String email)
 	{
 		String output = "";
@@ -142,18 +147,19 @@ public class Customer
 		{
 			Connection con = connect();
 			
+			//Check DB Connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for updating."; 
 			}
 			
-			// create a prepared statement
+			//Create a Prepared Statement
 			String query = "UPDATE customer SET customerName=?,nic=?,address=?,mobileNo=?, email=?"
 			+ "WHERE customerID=?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
-			// binding values
+			//Binding values
 			preparedStmt.setString(1, customerName);
 			preparedStmt.setString(2, nic);
 			preparedStmt.setString(3, address);
@@ -161,7 +167,7 @@ public class Customer
 			preparedStmt.setString(5, email);
 			preparedStmt.setString(6, customerID);
 			
-			// execute the statement
+			//Execute the statement
 			preparedStmt.execute();
 			con.close();
 			
@@ -176,6 +182,44 @@ public class Customer
 		return output;	
 	}
 	
+	//Delete Function
+	public String deleteCustomer(String customerID)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			//Check DB Connection
+			if (con == null)
+			{
+				return "Error while connecting to the database for deleting."; 
+			}
+			
+			//Create a prepared statement
+			String query = "delete from customer where customerID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			//Binding values
+			preparedStmt.setInt(1, Integer.parseInt(customerID));
+			
+			//Execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the Customer.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+		
+	}
 	
 }
 		
