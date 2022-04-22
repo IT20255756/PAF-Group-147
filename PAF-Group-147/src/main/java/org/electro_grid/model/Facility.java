@@ -24,7 +24,7 @@ public class Facility
 		return con;
 	}
 	
-	
+	//retrieve function
 	public String readFacility()
 	{
 		String output = "";
@@ -33,6 +33,7 @@ public class Facility
 		{
 			Connection con = connect();
 			
+			//check db connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for reading."; 
@@ -91,6 +92,7 @@ public class Facility
 		
 	}
 	
+	//insert function
 	public String insertFacility(String serviceName, String serviceType, String unitCost, String maxUnit, String addCost)
 	{
 		String output = "";
@@ -99,6 +101,7 @@ public class Facility
 		{
 			Connection con = connect();
 			
+			//check db connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for inserting."; 
@@ -135,6 +138,7 @@ public class Facility
 		return output;
 	}
 	
+	//update function
 	public String updateFacility(String serviceID, String serviceName, String serviceType, String unitCost, String maxUnit, String addCost)
 	{
 		String output = "";
@@ -143,6 +147,7 @@ public class Facility
 		{
 			Connection con = connect();
 			
+			//check db connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for updating."; 
@@ -177,6 +182,7 @@ public class Facility
 		return output;	
 	}
 	
+	//delete function
 	public String deleteFacility(String serviceID)
 	{
 		String output = "";
@@ -185,6 +191,7 @@ public class Facility
 		{
 			Connection con = connect();
 			
+			//check db connection
 			if (con == null)
 			{
 				return "Error while connecting to the database for deleting."; 
